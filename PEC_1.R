@@ -1,6 +1,7 @@
 # Se importan las librerias correspondientes
 library(SummarizedExperiment)
 library(metabolomicsWorkbenchR)
+library(MSPrep)
 # Se descarga el mwtab del estudio seleccionado
 mwtab<-do_query(context = "study", input_item = "study_id", input_value = "ST003570", 
                 output_item = "mwtab")
@@ -38,8 +39,10 @@ st003570<-SummarizedExperiment(
   rowData = rowData,
   colData = colData, 
   metadata = mwtab$STUDY)
+# Se muestran los distintos slots del objeto
 assay(st003570)
 rowData(st003570)
 colData(st003570)
 metadata(st003570)
 save(st003570, file = "ST003570.rda")
+

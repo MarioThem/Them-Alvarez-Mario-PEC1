@@ -1,7 +1,6 @@
 # Se importan las librerias correspondientes
 library(SummarizedExperiment)
 library(metabolomicsWorkbenchR)
-library(MSPrep)
 # Se descarga el mwtab del estudio seleccionado
 mwtab<-do_query(context = "study", input_item = "study_id", input_value = "ST003570", 
                 output_item = "mwtab")

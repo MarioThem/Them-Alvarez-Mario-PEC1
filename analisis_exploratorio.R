@@ -20,10 +20,11 @@ pc <- prcomp(t(na.omit(st003570_normalizado)), scale=FALSE)
 loads <- round(pc$sdev^2/sum(pc$sdev)*100,1)
 xlab<-paste("PC1", loads[1], "%")
 ylab<-paste("PC2", loads[2], "%")
+plot(pc)
 plot(pc$x, 
      xlab=xlab, 
      ylab=ylab,
      col=c(rep("red",3), rep("blue",3))
      )
 text(pc$x, row.names(pc$x), cex = 0.6, pos = 3)
-
+print(pc)

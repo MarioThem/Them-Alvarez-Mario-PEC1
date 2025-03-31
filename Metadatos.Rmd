@@ -1,5 +1,33 @@
 ---
 title: "Metadatos"
-output: html_document
+output:
+  html_document: default
 ---
+```{r, echo=FALSE,message=FALSE}
+load("ST003674.rda")
+library(SummarizedExperiment)
+```
 
+# Metadatos del estudio (MIAME)
+
+```{r}
+metadata(st003674)
+```
+Este es un estudio del departamento de química de la Universidad de Florencia, es una comparativa entre la lipidomica y metabolómica de 45 pacientes de 2 grupos que padecen 2 tipos de neumonía. Las muestras utilizadas son plasma en EDTA de los pacientes, analizadas por resonancia magnética nuclear. 
+
+# Metadatos de las muestras
+
+```{r}
+head(colData(st003674))
+table(colData(st003674)$ST003674.Sex)
+table(colData(st003674)$ST003674.Pneumonia)
+```
+
+Las muestras provienen de 24 pacientes con neumonia intersticial y 21 con neumonia lobar, con representación casi igualitaria entre sexos. 
+
+# Metadatos de los metabolitos
+
+```{r}
+head(rowData(st003674))
+```
+Hay 24 metabolitos y 114 marcadores de lipidomica, analizados por resonancia magnetica nuclear. 

@@ -4,6 +4,8 @@ library(SummarizedExperiment)
 library(factoextra)
 load("ST003674.rda")
 st003674_assay<-assay(st003674)
+dim(st003674_assay)
+summary(st003674_assay)
 # Se creaN nuevos SE con los valores de cada metabolito para cada una de las condiciones experimentales
 hombres_INT<-st003674[,st003674$ST003674.Pneumonia=="INT" & 
                         st003674$ST003674.Sex=="M "]
@@ -27,10 +29,12 @@ medias$`hombres-INT`<-medias$`hombres-INT`/mean(medias$`hombres-INT`)
 medias$`hombres-LOB`<-medias$`hombres-LOB`/mean(medias$`hombres-LOB`)
 medias$mujeres_INT<-medias$mujeres_INT/mean(medias$mujeres_INT)
 medias$`mujeres-LOB`<-medias$`mujeres-LOB`/mean(medias$`mujeres-LOB`)
+summary(medias)
+hist(medias[,1], main = names(medias)[1])
 # Boxplot para ver los valores generales de los metabolitos
 boxplot(medias)
 # PCA para determinar posibles grupos y outliers
-pc <- prcomp(t(na.omit(st003674_assay)), scale. = TRUE)
+pc <- prcomp(t(na.omitt(st003674_assay), scale. = TRUE))
 # Contribuciones a la variabilidad de las componentes del PCA(screeplot)
 fviz_eig(pc, addlabels = TRUE)
 # Visualización de las 50 variables que más contribuyen en el círculo de correlación de las 2 primeras PC
@@ -59,3 +63,8 @@ grp <- cutree(hc, k=4)
 table(grp)
 rownames(st003674_assay)[grp==3|grp==4|grp==1]
 fviz_dend(hc,k=4, repel = TRUE)
+hc_muestras <- hclust(dist(t(st003674_assay)), method = "average")
+fviz_dend(hc_muestras, k=4)
+grp_m<-cutree(hc_muestras,k=4)
+colnames(st003674_assay)[grp_m==4]
+st003674$ST003674.Pneumonia[grp_m==4|grp_m==2]

@@ -29,24 +29,26 @@ medias$`hombres-INT`<-medias$`hombres-INT`/mean(medias$`hombres-INT`)
 medias$`hombres-LOB`<-medias$`hombres-LOB`/mean(medias$`hombres-LOB`)
 medias$mujeres_INT<-medias$mujeres_INT/mean(medias$mujeres_INT)
 medias$`mujeres-LOB`<-medias$`mujeres-LOB`/mean(medias$`mujeres-LOB`)
-summary(medias)
-hist(medias[,1], main = names(medias)[1])
 # Boxplot para ver los valores generales de los metabolitos
-boxplot(medias)
+Boxplot(medias, 
+        main="Boxplot de las medias de los metabolitos estandarizadas por grupo", 
+        id = list(cex = 0.6, n = 4, location = "l"))
 # PCA para determinar posibles grupos y outliers
 pc <- prcomp(t(na.omitt(st003674_assay), scale. = TRUE))
 # Contribuciones a la variabilidad de las componentes del PCA(screeplot)
 fviz_eig(pc, addlabels = TRUE)
-# Visualización de las 50 variables que más contribuyen en el círculo de correlación de las 2 primeras PC
+# Visualización de las 20 variables que más contribuyen en el círculo de correlación de las 2 primeras PC
 fviz_pca_var(pc, col.var = "contrib",
-             repel = TRUE, select.var = list(contrib=50))
+             repel = TRUE, select.var = list(contrib=20))
 # Visualización de la contribución de los individuos a los 2 primeros PC
 grupos <- factor(paste(st003674$ST003674.Sex,st003674$ST003674.Pneumonia))
 grupos_neumonia <- st003674$ST003674.Pneumonia
 fviz_pca_ind(pc, repel = TRUE, col.ind = grupos,
-             addEllipses = TRUE, ellipse.type = "confidence")
+             addEllipses = TRUE, ellipse.type = "confidence", 
+             title="Contribución de los individuos según el sexo y tipo de neumonia")
 fviz_pca_ind(pc, repel = TRUE, col.ind = grupos_neumonia,
-             addEllipses = TRUE, ellipse.type = "confidence")
+             addEllipses = TRUE, ellipse.type = "confidence",
+             title="Contribución de los individuos según el tipo de neumonia")
 # Lo mismo pero en bar plot
 fviz_contrib(pc, choice = "var", top = 10)
 fviz_contrib(pc, choice = "var", top = 10, axes = 2)
